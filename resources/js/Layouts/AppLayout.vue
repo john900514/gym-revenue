@@ -1,15 +1,14 @@
 <template>
     <div>
         <Head :title="title" />
-
         <jet-banner />
-
-        <div class="min-h-screen bg-gray-100">
+        <div class="font-sans antialiased min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-8xl mx-4">
                     <div class="flex justify-between h-16">
                         <div class="flex">
+                            <button v-show="!showingSidebar" @click="showingSidebar = true" class="pr-2"><font-awesome-icon :icon="['fas', 'bars']" size="16"/></button>
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
@@ -88,6 +87,58 @@
                                     </template>
                                 </jet-dropdown>
                             </div>
+
+                            <!-- Notifications -->
+                            <div class="ml-3 relative">
+                                <button @click="showingNotificationDropdown = ! showingNotificationDropdown" class="flex mx-4 text-gray-600 focus:outline-none">
+                                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15 17H20L18.5951 15.5951C18.2141 15.2141 18 14.6973 18 14.1585V11C18 8.38757 16.3304 6.16509 14 5.34142V5C14 3.89543 13.1046 3 12 3C10.8954 3 10 3.89543 10 5V5.34142C7.66962 6.16509 6 8.38757 6 11V14.1585C6 14.6973 5.78595 15.2141 5.40493 15.5951L4 17H9M15 17V18C15 19.6569 13.6569 21 12 21C10.3431 21 9 19.6569 9 18V17M15 17H9"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        </path>
+                                    </svg>
+                                </button>
+
+                                <div v-show="showingNotificationDropdown" @click="showingNotificationDropdown = false" class="fixed inset-0 h-full w-full z-10" style="display: none;"></div>
+
+                                <!-- Notifications links -->
+                                <div v-show="showingNotificationDropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-10" style="width: 20rem; display: none;">
+                                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 -mx-2">
+                                        <figure class="w-1/6">
+                                            <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=334&amp;q=80" alt="avatar">
+                                        </figure>
+                                        <p class="text-sm mx-2 w-full">
+                                            <span class="font-bold" href="#">Sara Salah</span> replied on the <span class="font-bold text-indigo-400">Upload Image</span> article. 2m
+                                        </p>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 -mx-2">
+                                        <figure class="w-1/6">
+                                            <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80" alt="avatar">
+                                        </figure>
+                                        <p class="text-sm mx-2 w-full">
+                                            <span class="font-bold" href="#">Slick Net</span> start following you . 45m
+                                        </p>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 -mx-2">
+                                        <figure class="w-1/6">
+                                            <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1450297350677-623de575f31c?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=334&amp;q=80" alt="avatar">
+                                        </figure>
+                                        <p class="text-sm mx-2 w-full">
+                                            <span class="font-bold" href="#">Jane Doe</span> Like Your reply on <span class="font-bold text-indigo-400" href="#">Test with TDD</span> artical . 1h
+                                        </p>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 -mx-2">
+                                        <figure class="w-1/6">
+                                            <img class="h-8 w-8 rounded-full object-cover mx-1" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=398&amp;q=80" alt="avatar">
+                                        </figure>
+                                        <p class="text-sm mx-2 w-full">
+                                            <span class="font-bold" href="#">Abigail Bennett</span> start following you . 3h
+                                        </p>
+                                    </a>
+                                </div>
+                                <!-- End Notifications links -->
+                            </div>
+                            <!-- End Notifications -->
 
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
@@ -258,55 +309,87 @@
                 </div>
             </nav>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header"></slot>
+            <div class="font-sans antialiased bg-gray-100">
+                <jet-banner />
+
+                <div class="lg:flex flex-col lg:flex-row lg:min-h-screen w-full">
+
+                    <!-- Sidebar -->
+                    <jet-bar-sidebar v-show="showingSidebar" @toggle="showingSidebar = !showingSidebar"/>
+                    <!-- End Sidebar -->
+
+                    <div class="w-full">
+                        <!-- Content Container -->
+                        <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
+                            <div v-if="this.$slots.header" class="max-w-7xl mx-auto pt-3 px-4 sm:px-6 lg:px-8">
+                                <!-- Title -->
+                                <h1 class="text-lg font-semibold tracking-widest text-gray-900 uppercase dark-mode:text-white">
+                                    <slot name="header"></slot>
+                                </h1>
+                                <!-- End Title -->
+                            </div>
+                            <!-- Replace with your content -->
+                            <div>
+                                <!-- Content -->
+                                <div class="min-h-full lg:min-h-96 px-4 sm:px-0">
+                                    <slot></slot>
+                                </div>
+                                <!-- End Content -->
+                            </div>
+                            <!-- /End replace -->
+                        </main>
+                        <!-- Content Container -->
+
+                    </div>
+
                 </div>
-            </header>
 
-            <!-- Page Content -->
-            <main>
-                <slot></slot>
-            </main>
-
-
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import { defineComponent } from 'vue'
-    import JetApplicationMark from '@/Jetstream/ApplicationMark.vue'
-    import JetBanner from '@/Jetstream/Banner.vue'
-    import JetDropdown from '@/Jetstream/Dropdown.vue'
-    import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
-    import JetNavLink from '@/Jetstream/NavLink.vue'
-    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
+
+    import { library } from '@fortawesome/fontawesome-svg-core';
+    import { faBars } from '@fortawesome/pro-solid-svg-icons'
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    library.add(faBars)
+
+    import JetApplicationMark from '@/Jetstream/ApplicationMark'
+    import JetBanner from '@/Jetstream/Banner'
+    import JetDropdown from '@/Jetstream/Dropdown'
+    import JetDropdownLink from '@/Jetstream/DropdownLink'
+    import JetNavLink from '@/Jetstream/NavLink'
+    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import JetBarNavigationMenu from "@/Components/JetBarNavigationMenu";
+    import JetBarSidebar from "@/Components/JetBarSidebar";
     import { Head, Link } from '@inertiajs/inertia-vue3';
 
     export default defineComponent({
-        props: {
-            title: String,
-        },
-
         components: {
-            Head,
+            Head, Link,
+            JetBarSidebar,
+            JetBarNavigationMenu,
             JetApplicationMark,
             JetBanner,
             JetDropdown,
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
-            Link,
+            FontAwesomeIcon
         },
-
+        props: {
+            title: String,
+        },
         data() {
             return {
+                showingSidebar: true,
                 showingNavigationDropdown: false,
+                showingNotificationDropdown: false,
             }
         },
-
         methods: {
             switchToTeam(team) {
                 this.$inertia.put(route('current-team.update'), {

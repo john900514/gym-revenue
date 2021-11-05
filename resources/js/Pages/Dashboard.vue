@@ -5,46 +5,42 @@
         </template>
 
         <jet-bar-container>
-
             <jet-bar-alert text="This is an alert message" />
 
             <jet-bar-stats-container >
-                <jet-bar-stat-card title="Total clients" number="6389" type="warning">
+                <jet-bar-stat-card title="Total Clients" :number="clients.length" type="warning">
                     <template v-slot:icon>
                         <jet-bar-icon type="users" fill />
                     </template>
                 </jet-bar-stat-card>
 
-                <jet-bar-stat-card title="Account balance" number="$ 46,760.89" type="success">
+                <jet-bar-stat-card title="Total Revenue Funneled" number="$ 0" type="success">
                     <template v-slot:icon>
                         <jet-bar-icon type="money" fill />
                     </template>
                 </jet-bar-stat-card>
 
-                <jet-bar-stat-card title="New sales" number="376" type="info">
+                <jet-bar-stat-card title="Total Profits" number="$ 0" type="info">
                     <template v-slot:icon>
                         <jet-bar-icon type="cart" fill />
                     </template>
                 </jet-bar-stat-card>
 
-                <jet-bar-stat-card title="Pending contacts" number="35" type="danger">
+                <jet-bar-stat-card title="Total MCU Films" number="26" type="danger">
                     <template v-slot:icon>
                         <jet-bar-icon type="message" fill />
                     </template>
                 </jet-bar-stat-card>
             </jet-bar-stats-container>
 
-            <jet-bar-table :headers="['name', 'title', 'status', 'role', '', '']" >
-                <tr class="hover:bg-gray-50" v-for="index in 3" :key="index">
-                    <jet-bar-table-data>Jane Cooper</jet-bar-table-data>
+            <jet-bar-table :headers="['client', 'status', 'joined', '', '']" >
+                <tr class="hover:bg-gray-50" v-for="client in clients" :key="client.id">
+                    <jet-bar-table-data>{{ client.name }}</jet-bar-table-data>
                     <jet-bar-table-data>
-                        <div class="text-sm text-gray-900">Regional Paradigm Technician</div>
-                        <div class="text-sm text-gray-500">Optimization</div>
+                        <jet-bar-badge text="Active" type="success" v-if="client.active"/>
+                        <jet-bar-badge text="Not Active" type="danger" v-else/>
                     </jet-bar-table-data>
-                    <jet-bar-table-data>
-                        <jet-bar-badge text="Active" type="success" />
-                    </jet-bar-table-data>
-                    <jet-bar-table-data>Admin</jet-bar-table-data>
+                    <jet-bar-table-data>{{ client.created_at}} </jet-bar-table-data>
                     <jet-bar-table-data>
                         <inertia-link href="#" class="text-indigo-600 hover:text-indigo-900">Edit</inertia-link>
                     </jet-bar-table-data>
@@ -84,5 +80,14 @@ export default {
         JetBarBadge,
         JetBarIcon,
     },
+    props: [
+        'clients'
+    ],
+    data() {},
+    methods: {},
+    computed: {},
+    mounted() {
+        console.log('GymRevenue Dashboard');
+    }
 }
 </script>

@@ -14,37 +14,25 @@
         <!-- Sidebar Links -->
         <nav :class="{'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown}" class="flex-grow lg:block px-4 pb-4 lg:pb-0 lg:overflow-y-auto z-10">
             <!-- Searchbar -->
-            <div class="flex items-center">
-                <div class="relative mr-4 lg:mx-0 w-full">
-                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                    <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </span>
-                    <input class="form-input w-full sm:w-56 rounded-md pl-10 pr-4 p-2 bg-gray-100 border-1 border-transparent focus:bg-transparent focus:border-indigo-300" type="text" placeholder="Search">
-                </div>
-            </div>
+            <jet-bar-sidebar-search />
             <!-- End Searchbar -->
+            <div :class="route().current('data.leads') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2">
+                <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('data.leads')">Leads</jet-nav-link>
+            </div>
 
-            <template v-if="$page.props.jetstream.hasTeamFeatures">
-                <inertia-link v-if="$page.props.jetstream.canCreateTeams" :class="route().current('teams.create') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('teams.create')">Create Team</inertia-link>
-                <inertia-link :class="route().current('teams.show') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('teams.show', $page.props.user.current_team)">Team Settings</inertia-link>
-            </template>
-            <inertia-link :class="route().current('profile.show') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('profile.show')">Profile</inertia-link>
-            <div  class="relative" >
-                <button @click="showingSidebarNavigationDropdown = !showingSidebarNavigationDropdown" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 lg:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
-                    <span>Dropdown</span>
-                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': showingSidebarNavigationDropdown, 'rotate-0': !showingSidebarNavigationDropdown}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform lg:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </button>
-                <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" >
-                    <div v-if="showingSidebarNavigationDropdown" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg z-20">
-                        <div class="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 lg:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #1</a>
-                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 lg:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #2</a>
-                            <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 lg:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Link #3</a>
-                        </div>
-                    </div>
-                </transition>
+            <div :class="route().current('data.conversions') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2">
+                <!-- <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('data.conversions')">Conversions</jet-nav-link> -->
+                <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#" @click="comingSoon()">Conversions</jet-nav-link>
+            </div>
+
+            <div :class="route().current('workout-generator') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2">
+                <!-- <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('workout-generator')">Workout Generator</jet-nav-link> -->
+                <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#" @click="comingSoon()">Workout Generator</jet-nav-link>
+            </div>
+
+            <div :class="route().current('sales-slideshow') ? 'bg-gray-200' : 'bg-transparent'" class="block px-4 py-2 mt-2">
+                <!-- <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" :href="route('sales-slideshow')">Sales Slideshow</jet-nav-link> -->
+                <jet-nav-link class="text-sm font-semibold text-gray-900 rounded-lg dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#" @click="comingSoon()">Sales Slideshow</jet-nav-link>
             </div>
 
             <jet-bar-responsive-links />
@@ -57,9 +45,17 @@
 
 <script>
 import JetBarResponsiveLinks from "@/Components/JetBarResponsiveLinks";
+import JetBarSidebarSearch from "./JetBarSidebarSearch";
+import JetNavLink from '@/Jetstream/NavLink'
+
+
 export default {
     name: "JetBarSidebar",
-    components: {JetBarResponsiveLinks},
+    components: {
+        JetNavLink,
+        JetBarResponsiveLinks,
+        JetBarSidebarSearch
+    },
     data() {
         return {
             showingNavigationDropdown: false,
@@ -69,7 +65,15 @@ export default {
     methods: {
         toggle() {
             this.$emit('toggle');
-        }
+        },
+        comingSoon() {
+            new Noty({
+                type: 'warning',
+                theme: 'sunset',
+                text: 'Feature Coming Soon!',
+                timeout: 7500
+            }).show();
+        },
     }
 }
 </script>
